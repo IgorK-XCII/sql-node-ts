@@ -1,0 +1,22 @@
+<h2>Todos page</h2>
+
+{{#if todos.length }}
+<ul>
+    {{#each todos}}
+        <li class="todo">
+            <label>
+            {{#if completed}}
+                <input type="checkbox" checked>
+                <span class="completed">{{title}}</span>
+            {{else}}
+                <input type="checkbox">
+                <span>{{title}}</span>
+            {{/if}}
+            <button class="button"></button>
+            </label>
+        </li>
+    {{/each}}
+</ul>
+{{else}}
+    <p>Todo not found...</p>
+{{/if}}

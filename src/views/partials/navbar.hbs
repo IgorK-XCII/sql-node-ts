@@ -1,0 +1,22 @@
+<nav>
+    <div class="navbar">
+        <a href="/" class="navbar__logo">TODOS</a>
+        <ul class="navbar__routes">
+            {{#if isList}}
+            <li class="navbar__routes__active"><a href="/">CONTROL</a></li>
+            {{else }}
+            <li><a href="/">CONTROL</a></li>
+            {{/if}}
+            {{#if isCreate}}
+                <li class="navbar__routes__active"><a href="/create">CREATE</a></li>
+            {{else }}
+                <li><a href="/create">CREATE</a></li>
+            {{/if}}
+            {{#if isAbout}}
+                <li class="navbar__routes__active"><a href="/about">ABOUT</a></li>
+            {{else }}
+                <li><a href="/about">ABOUT</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

@@ -1,38 +1,35 @@
-import express from 'express';
-import {userRouter} from './routes/userRouter';
+import express, {Response} from 'express';
 import {create} from 'express-handlebars';
-import {Database} from './model/Database';
-import {SQL} from './model/SQL';
-import {mainRouter} from './routes/mainRouter';
 import path from 'path';
+import {todosListRoute} from './routes/todosListRoute';
+import {createTodosRoute} from './routes/createTodosRoute';
+import {aboutRoute} from './routes/aboutRoute';
+
 
 const app = express();
-const hbs = create({
+const hbs: Exphbs = create({
   defaultLayout: 'main',
   extname: 'hbs',
 });
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('views', path.resolve(__dirname, 'views'));
-
 const PORT = 3000;
 
-app.use('/user', userRouter);
-app.use('/', mainRouter);
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', path.resolve(__dirname, '..', 'src', 'views'));
+app.use(express.static(path.resolve(__dirname, '..', 'src', 'public')));
 
-app.use((req, res) => {
-  res.status(404).send('404 PAGE NOT FOUND');
+app.use('/create', createTodosRoute);
+app.use('/about', aboutRoute);
+app.use('/', todosListRoute);
+
+app.use((req, res: Response) => {
+  res.status(404).send('PAGE NOT FOUND 404');
 });
 
-export const sqlDatabase = new Database(new SQL({
-  host: 'localhost',
-  user: 'root',
-  password: 'admin',
-  database: 'node_sql',
-}));
 
 try {
-  app.listen(PORT, () => console.log(`Server has been started at PORT:${PORT}`));
+  app.listen(PORT, () => console.log(`App running on PORT:${PORT}`));
 } catch (e) {
-  console.error(e);
+  console.log(e.text);
 }
+

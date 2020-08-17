@@ -1,0 +1,52 @@
+* {
+    font-family: Roboto, sans-serif;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+.container {
+    margin: 30px auto;
+    max-width: 800px;
+    font-size: 1.2rem;
+}
+
+nav {
+    height: 64px;
+    background-color: black;
+}
+.navbar {
+    position: relative;
+    width: 100%;
+    display: block;
+    line-height: 64px;
+    padding: 0 50px;
+}
+.navbar a {
+    color: white;
+}
+.navbar__logo{
+    position: absolute;
+    font-size: 2rem;
+    overflow: hidden;
+}
+.navbar__routes {
+    float: right;
+}
+.navbar__routes li {
+    float: left;
+}
+.navbar__routes a {
+    display: block;
+    padding: 0 10px;
+    font-size: 0.9rem;
+}
+.navbar__routes a:hover {
+    color: black;
+    background: white;
+    transition: color, background-color 0.3s ease;
+}
+.navbar__routes__active {
+    background: green;
+}

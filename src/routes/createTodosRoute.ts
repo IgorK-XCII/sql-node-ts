@@ -1,6 +1,8 @@
 import {Router as router} from 'express';
-import {createTodosController} from '../controllers/createTodosController';
+import {CreateTodosController} from '../controllers/CreateTodosController';
 
 export const createTodosRoute = router();
 
-createTodosRoute.use('/', createTodosController);
+createTodosRoute.get('/', CreateTodosController.getView);
+
+createTodosRoute.post('/', CreateTodosController.postTodo);

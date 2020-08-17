@@ -1,6 +1,7 @@
 import {Router as router} from 'express';
-import {todosListController} from '../controllers/todosListController';
+import {TodosListController} from '../controllers/TodosListController';
+
 
 export const todosListRoute = router();
 
-todosListRoute.use('/', todosListController);
+todosListRoute.get('/', TodosListController.getView);

@@ -1,6 +1,6 @@
 import {Router as router} from 'express';
-import {aboutController} from '../controllers/aboutController';
+import {AboutController} from '../controllers/AboutController';
 
 export const aboutRoute = router();
 
-aboutRoute.use('/', aboutController);
+aboutRoute.get('/', AboutController.getView);

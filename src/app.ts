@@ -17,6 +17,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, '..', 'src', 'views'));
 app.use(express.static(path.resolve(__dirname, '..', 'src', 'public')));
+app.use(express.urlencoded({extended: true}));
 
 app.use('/create', createTodosRoute);
 app.use('/about', aboutRoute);
@@ -32,4 +33,3 @@ try {
 } catch (e) {
   console.log(e.text);
 }
-

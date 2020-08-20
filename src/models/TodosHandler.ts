@@ -2,7 +2,8 @@ import {Todo} from './Todo';
 import {SqlDbProvider} from './SQL/SqlDbProvider';
 import {RowDataPacket} from './SQL/Models/RowDataPacket';
 import {OkPacket} from 'mysql';
-import {stringToBoolean} from '../shared/utils';
+import {objectFieldToUpdateQuery, stringToBoolean} from '../shared/utils';
+import {ITodoUpdate} from './ITodoUpdate';
 
 export class TodosHandler {
   private static tableName = 'todos';
@@ -32,9 +33,18 @@ export class TodosHandler {
     const response: OkPacket = await this.connection.put(`insert into ${this.tableName} (title, completed) values ('${todo.title}', ${todo.completed})`);
     return !!response.affectedRows;
   }
-  public static async update(todo:Todo): Promise<boolean> {
-    if (!todo.id) return false;
-    const response:OkPacket = await this.connection.put(`update ${this.tableName} set title = '${todo.title}', completed = ${todo.completed} where id = ${todo.id}`);
+  public static async update(id: number, updateData: ITodoUpdate): Promise<boolean> {
+    const keys = Object.keys(updateData);
+    const response:OkPacket = await this.connection.put(`update ${this.tableName} ${objectFieldToUpdateQuery(keys, updateData)} where id = ${id}`);
+    return !!response.affectedRows;
+  }
+  public static async updateAll(ids: string[], completed: string[] | []): Promise<boolean> {
+    let req = `update ${this.tableName} set completed = case `;
+    ids.forEach((id: string) => {
+      req += `when id = ${id} then ${completed.some((el: string) => el === id)} `;
+    });
+    req += 'end;';
+    const response:OkPacket = await this.connection.put(req);
     return !!response.affectedRows;
   }
 }
